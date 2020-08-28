@@ -15,6 +15,9 @@ const Header = () => (
       <NavLink className="option" exact activeCLassName="active-nav" to="/contact">
         Contact
       </NavLink>
+      <NavLink className="option" exact activeCLassName="active-nav" to="/signin">
+        Sign in
+      </NavLink>
     </div>
   </div>
 );
