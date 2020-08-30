@@ -21,17 +21,49 @@ export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
+const db = firebase.firestore();
+
+export const createUserProfileDoc = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+
+  const userRef = db.doc(`users/${userAuth.uid}`);
+  const doc = await userRef.get();
+  if (!doc.exists) {
+    const { uid, email, displayName } = userAuth;
+    const createdAt = new Date();
+    await userRef.set({
+      uid,
+      email,
+      displayName,
+      createdAt,
+      ...additionalData,
+    });
+  }
+
+  return userRef;
+};
+
 export const SignInWithGoogle = () =>
   auth
     .signInWithPopup(provider)
-    .then(function (result) {
+    .then(async (result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
+      //   var token = result.credential.accessToken;
       // The signed-in user info.
-      var user = result.user;
-      console.log(user);
-      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-      console.log(token);
+      // var user = result.user;
+      //   const docRef = db.collection("users").doc(user.uid);
+      // const userRef = db.collection("users").doc(user.uid);
+      // const doc = await userRef.get();
+      // if (!doc.exists) {
+      //   await userRef.set({
+      //     uid: user.uid,
+      //     email: user.email,
+      //     displayName: user.displayName,
+      //   });
+      // } else {
+      //   // console.log("Document data:", doc.data());
+      //   return doc.data();
+      // }
       // ...
     })
     .catch(function (error) {

@@ -6,7 +6,7 @@ import HomePage from "./pages/homepage/HomePage";
 import ShopPage from "./pages/shop/ShopPage";
 import Header from "./components/header/Header";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/SignInAndSignUp";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDoc } from "./firebase/firebase.utils";
 
 class App extends React.Component {
   constructor() {
@@ -19,10 +19,42 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDoc(userAuth);
+        const doc = await userRef.get();
+        console.log(doc.data());
+        this.setState({
+          currentUser: {
+            ...doc.data(),
+          },
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
+
+  // componentDidMount() {
+  //   this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+  //     if (user) {
+  //       const userRef = firebase.firestore().collection("users").doc(user.uid);
+  //       const doc = await userRef.get();
+  //       this.setState(
+  //         {
+  //           currentUser: {
+  //             ...doc.data(),
+  //           },
+  //         },
+  //         () => console.log(this.state)
+  //       );
+  //     }
+  //     // this.setState({ currentUser: user });
+  //     // console.log(SignInWithGoogle);
+
+  //     this.setState({ currentUser: user });
+  //   });
+  // }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();

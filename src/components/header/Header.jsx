@@ -13,7 +13,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <NavLink className="logo-container" exact to="/">
-          <Logo />
+          <Logo /> {this.props.user ? this.props.user.displayName : " "}
         </NavLink>
         <div className="options">
           <NavLink className="option" exact to="/shop">
@@ -22,7 +22,6 @@ class Header extends React.Component {
           <NavLink className="option" exact to="/contact">
             Contact
           </NavLink>
-          {console.log(this.props.user)}
           {this.props.user ? (
             <div className="option" onClick={this.SignOut}>
               Sign Out
