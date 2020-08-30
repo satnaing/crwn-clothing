@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.scss";
 import { auth } from "../../firebase/firebase.utils";
+import { connect } from "react-redux";
 
 class Header extends React.Component {
   SignOut = () => {
@@ -13,7 +14,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <NavLink className="logo-container" exact to="/">
-          <Logo /> {this.props.user ? this.props.user.displayName : " "}
+          <Logo />
         </NavLink>
         <div className="options">
           <NavLink className="option" exact to="/shop">
@@ -22,7 +23,8 @@ class Header extends React.Component {
           <NavLink className="option" exact to="/contact">
             Contact
           </NavLink>
-          {this.props.user ? (
+          {console.log(this.props.user)}
+          {this.props.user.currentUser ? (
             <div className="option" onClick={this.SignOut}>
               Sign Out
             </div>
@@ -37,4 +39,6 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({ user: state.user });
+
+export default connect(mapStateToProps)(Header);
