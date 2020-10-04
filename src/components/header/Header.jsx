@@ -4,6 +4,8 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.scss";
 import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
+import CartIcon from "../cart-icon/CartIcon";
+import CartDropdown from "../cart-dropdown/CartDropdown";
 
 class Header extends React.Component {
   SignOut = () => {
@@ -23,8 +25,7 @@ class Header extends React.Component {
           <NavLink className="option" exact to="/contact">
             Contact
           </NavLink>
-          {console.log(this.props.user)}
-          {this.props.user.currentUser ? (
+          {this.props.currentUser ? (
             <div className="option" onClick={this.SignOut}>
               Sign Out
             </div>
@@ -33,12 +34,17 @@ class Header extends React.Component {
               Sign in
             </NavLink>
           )}
+          <CartIcon />
         </div>
+        {this.props.toggleCart ? null : <CartDropdown />}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = (state) => ({
+  user: state.user.currentUser,
+  toggleCart: state.toggleCart.hidden,
+});
 
 export default connect(mapStateToProps)(Header);
