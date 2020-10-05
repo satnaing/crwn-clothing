@@ -36,7 +36,7 @@ class Header extends React.Component {
           )}
           <CartIcon />
         </div>
-        {this.props.toggleCart ? null : <CartDropdown />}
+        {this.props.Cart ? null : <CartDropdown />}
       </div>
     );
   }
@@ -44,7 +44,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user.currentUser,
-  toggleCart: state.toggleCart.hidden,
+  Cart: state.Cart.hidden,
 });
 
 export default connect(mapStateToProps)(Header);

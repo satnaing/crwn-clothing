@@ -1,9 +1,9 @@
 import { TOGGLE_CART_HIDDEN } from "../types";
 
-const toggleCart = () => {
+const Cart = () => {
   return {
     type: TOGGLE_CART_HIDDEN,
   };
 };
 
-export default toggleCart;
+export default Cart;
