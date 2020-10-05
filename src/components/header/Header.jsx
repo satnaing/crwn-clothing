@@ -6,6 +6,9 @@ import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 import CartIcon from "../cart-icon/CartIcon";
 import CartDropdown from "../cart-dropdown/CartDropdown";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/selectors/user.selectors";
+import { selectCartHidden } from "../../redux/selectors/cart.selectors";
 
 class Header extends React.Component {
   SignOut = () => {
@@ -42,9 +45,9 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user.currentUser,
-  Cart: state.Cart.hidden,
+const mapStateToProps = createStructuredSelector({
+  user: selectCurrentUser,
+  Cart: selectCartHidden,
 });
 
 export default connect(mapStateToProps)(Header);
