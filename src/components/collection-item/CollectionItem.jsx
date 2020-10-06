@@ -3,13 +3,16 @@ import "./collection-item.scss";
 import CustomButton from "../custom-button/CustomButton";
 import { connect } from "react-redux";
 
-import { cartItems } from "../../redux/actions/cartItems";
+import { cartItems } from "../../redux/actions/cart";
 
 const CollectionItem = ({ item, cartItems }) => {
   const { name, imageUrl, price } = item;
   return (
     <div className="collection-item">
-      <div className="image" style={{ backgroundImage: `url(${imageUrl})` }}></div>
+      <div
+        className="image"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      ></div>
       <div className="collection-footer">
         <span className="name">{name}</span>
         <span className="price">{price}</span>
