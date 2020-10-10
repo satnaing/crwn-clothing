@@ -4,16 +4,18 @@ import "./menuitem.scss";
 import { withRouter } from "react-router-dom";
 
 class MenuItem extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   handleClick = (e) => {
     this.props.history.push(this.props.linkUrl);
   };
   render() {
     return (
-      <div className={`${this.props.size} menu-item`} onClick={this.handleClick}>
+      <div
+        className={`${this.props.size} menu-item`}
+        onClick={this.handleClick}
+      >
         <div
           className="background-image"
           style={{
